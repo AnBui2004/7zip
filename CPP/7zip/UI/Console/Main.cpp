@@ -333,7 +333,7 @@ static void ShowProgInfo(CStdOutStream *so)
     {
       FString temp;
       NDir::MyGetTempPath(temp);
-      if (!temp.IsEqualTo(STRING_PATH_SEPARATOR "tmp" STRING_PATH_SEPARATOR))
+      if (!temp.IsEqualTo("@TERMUX_PREFIX@/tmp/"))
         *so << " temp_path:" << temp;
     }
   }

@@ -864,10 +864,10 @@ bool MyGetTempPath(FString &path)
   #else  // !_WIN32
   
   // FIXME: improve that code
-  path = STRING_PATH_SEPARATOR "tmp";
+  path = "@TERMUX_PREFIX@/tmp";
   const char *s;
   if (NFind::DoesDirExist_FollowLink(path))
-    s = STRING_PATH_SEPARATOR "tmp" STRING_PATH_SEPARATOR;
+    s = "@TERMUX_PREFIX@/tmp/";
   else
     s = "." STRING_PATH_SEPARATOR;
   path = s;

@@ -1897,8 +1897,7 @@ FString GetModuleDirPrefix()
   FString s;
 
   s = fas2fs(g_ModuleDirPrefix);
-  if (s.IsEmpty())
-    s = FTEXT(".") FSTRING_PATH_SEPARATOR;
+  s = FTEXT("@TERMUX_PREFIX@/libexec/7zip") FSTRING_PATH_SEPARATOR;
   return s;
   /*
   setenv("_7ZIP_HOME_DIR", "/test/", 0);
