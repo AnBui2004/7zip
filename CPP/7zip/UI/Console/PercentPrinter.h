@@ -31,6 +31,7 @@ public:
   bool DisablePrint;
   bool NeedFlush;
   unsigned MaxLen;
+  bool LineMode = false;
   
 private:
   UInt32 _tickStep;
@@ -53,6 +54,7 @@ public:
       DisablePrint(false),
       NeedFlush(true),
       MaxLen(80 - 1),
+      LineMode(false),
       _tickStep(tickStep),
       _prevTick(0)
   {}

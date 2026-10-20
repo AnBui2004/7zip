@@ -137,6 +137,7 @@ enum Enum
   kOutStream,
   kErrStream,
   kPercentStream,
+  kProgressLineMode,
 
   kYes,
 
@@ -289,6 +290,7 @@ static const CSwitchForm kSwitchForms[] =
   { "bso", NSwitchType::kChar, false, 1, k_Stream_PostCharSet },
   { "bse", NSwitchType::kChar, false, 1, k_Stream_PostCharSet },
   { "bsp", NSwitchType::kChar, false, 1, k_Stream_PostCharSet },
+  { "bpl", SWFRM_SIMPLE },
   
   { "y", SWFRM_SIMPLE },
   
@@ -1091,6 +1093,7 @@ void CArcCmdLineParser::Parse1(const UStringVector &commandStrings,
   SetStreamMode(parser[NKey::kOutStream], options.Number_for_Out);
   SetStreamMode(parser[NKey::kErrStream], options.Number_for_Errors);
   SetStreamMode(parser[NKey::kPercentStream], options.Number_for_Percents);
+  options.ProgressLineMode = parser[NKey::kProgressLineMode].ThereIs;
 
   if (parser[NKey::kLogLevel].ThereIs)
   {

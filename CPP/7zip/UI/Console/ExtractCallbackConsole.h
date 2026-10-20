@@ -60,12 +60,14 @@ public:
       CStdOutStream *outStream,
       CStdOutStream *errorStream,
       CStdOutStream *percentStream,
-      bool disablePercents)
+      bool disablePercents,
+      bool progressLineMode = false)
   {
     _so = outStream;
     _se = errorStream;
     _percent._so = percentStream;
     _percent.DisablePrint = disablePercents;
+    _percent.LineMode = progressLineMode;
   }
   
   void SetWindowWidth(unsigned width) { _percent.MaxLen = width - 1; }
@@ -186,9 +188,11 @@ public:
       CStdOutStream *outStream,
       CStdOutStream *errorStream,
       CStdOutStream *percentStream,
-      bool disablePercents)
+      bool disablePercents,
+      bool progressLineMode = false)
   {
-    COpenCallbackConsole::Init(outStream, errorStream, percentStream, disablePercents);
+    COpenCallbackConsole::Init(
+        outStream, errorStream, percentStream, disablePercents, progressLineMode);
 
     NumTryArcs = 0;
     

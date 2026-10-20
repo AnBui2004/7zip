@@ -24,33 +24,37 @@ void CPercentPrinterState::ClearCurState()
 
 void CPercentPrinter::ClosePrint(bool needFlush)
 {
-  unsigned num = _printedString.Len();
-  if (num != 0)
+  if (!LineMode)
   {
+    unsigned num = _printedString.Len();
+    if (num != 0)
+    {
 
-  unsigned i;
+    unsigned i;
     
-  /* '\r' in old MAC OS means "new line".
-     So we can't use '\r' in some systems */
+    /* '\r' in old MAC OS means "new line".
+       So we can't use '\r' in some systems */
     
-  #ifdef _WIN32
-    char *start = _temp.GetBuf(num  + 2);
-    char *p = start;
-    *p++ = '\r';
-    for (i = 0; i < num; i++) *p++ = ' ';
-    *p++ = '\r';
-  #else
-    char *start = _temp.GetBuf(num * 3);
-    char *p = start;
-    for (i = 0; i < num; i++) *p++ = '\b';
-    for (i = 0; i < num; i++) *p++ = ' ';
-    for (i = 0; i < num; i++) *p++ = '\b';
-  #endif
+    #ifdef _WIN32
+      char *start = _temp.GetBuf(num  + 2);
+      char *p = start;
+      *p++ = '\r';
+      for (i = 0; i < num; i++) *p++ = ' ';
+      *p++ = '\r';
+    #else
+      char *start = _temp.GetBuf(num * 3);
+      char *p = start;
+      for (i = 0; i < num; i++) *p++ = '\b';
+      for (i = 0; i < num; i++) *p++ = ' ';
+      for (i = 0; i < num; i++) *p++ = '\b';
+    #endif
     
-  *p = 0;
-  _temp.ReleaseBuf_SetLen((unsigned)(p - start));
-  *_so << _temp;
+    *p = 0;
+    _temp.ReleaseBuf_SetLen((unsigned)(p - start));
+    *_so << _temp;
+    }
   }
+
   if (needFlush)
     _so->Flush();
   _printedString.Empty();
@@ -174,6 +178,8 @@ void CPercentPrinter::Print()
   {
     ClosePrint(false);
     *_so << _s;
+    if (LineMode)
+      *_so << '\n';
     if (NeedFlush)
       _so->Flush();
     _printedString = _s;

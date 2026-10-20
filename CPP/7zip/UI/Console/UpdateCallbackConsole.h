@@ -70,7 +70,8 @@ public:
       CStdOutStream *outStream,
       CStdOutStream *errorStream,
       CStdOutStream *percentStream,
-      bool disablePercents)
+      bool disablePercents,
+      bool progressLineMode = false)
   {
     FailedFiles.Clear();
 
@@ -78,6 +79,7 @@ public:
     _se = errorStream;
     _percent._so = percentStream;
     _percent.DisablePrint = disablePercents;
+    _percent.LineMode = progressLineMode;
   }
 
   void ClosePercents2()

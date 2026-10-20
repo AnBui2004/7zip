@@ -53,12 +53,14 @@ public:
       CStdOutStream *outStream,
       CStdOutStream *errorStream,
       CStdOutStream *percentStream,
-      bool disablePercents)
+      bool disablePercents,
+      bool progressLineMode = false)
   {
     _so = outStream;
     _se = errorStream;
     _percent._so = percentStream;
     _percent.DisablePrint = disablePercents;
+    _percent.LineMode = progressLineMode;
   }
 
   Z7_IFACE_IMP(IOpenCallbackUI)

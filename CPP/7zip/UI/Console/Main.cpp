@@ -155,6 +155,7 @@ static const char * const kHelpString =
     "  -bb[0-3] : set output log level\n"
     "  -bd : disable progress indicator\n"
     "  -bs{o|e|p}{0|1|2} : set output stream for output/error/progress line\n"
+    "  -bpl : print progress on separate lines\n"
     "  -bt : show execution time statistics\n"
     "  -i[r[-|0]][m[-|2]][w[-]]{@listfile|!wildcard} : Include filenames\n"
     "  -m{Parameters} : set compression Method\n"
@@ -1307,7 +1308,7 @@ int Main2(
       
       scan.Init(options.EnableHeaders ? g_StdStream : NULL,
           g_ErrStream, percentsStream,
-          options.DisablePercents);
+          options.DisablePercents, options.ProgressLineMode);
       scan.SetWindowWidth(consoleWidth);
 
       if (g_StdStream && options.EnableHeaders)
@@ -1357,7 +1358,8 @@ int Main2(
       ecs->Password = options.Password;
       #endif
 
-      ecs->Init(g_StdStream, g_ErrStream, percentsStream, options.DisablePercents);
+      ecs->Init(g_StdStream, g_ErrStream, percentsStream,
+          options.DisablePercents, options.ProgressLineMode);
       ecs->MultiArcMode = (ArchivePathsSorted.Size() > 1);
 
       ecs->LogLevel = options.LogLevel;
@@ -1566,7 +1568,8 @@ int Main2(
       uo.SfxModule = kDefaultSfxModule;
 
     COpenCallbackConsole openCallback;
-    openCallback.Init(g_StdStream, g_ErrStream, percentsStream, options.DisablePercents);
+    openCallback.Init(g_StdStream, g_ErrStream, percentsStream,
+        options.DisablePercents, options.ProgressLineMode);
 
     #ifndef Z7_NO_CRYPTO
     bool passwordIsDefined =
@@ -1591,7 +1594,8 @@ int Main2(
     callback.StdOutMode = uo.StdOutMode;
     callback.Init(
       // NULL,
-      g_StdStream, g_ErrStream, percentsStream, options.DisablePercents);
+      g_StdStream, g_ErrStream, percentsStream,
+      options.DisablePercents, options.ProgressLineMode);
 
     CUpdateErrorInfo errorInfo;
 
@@ -1626,7 +1630,8 @@ int Main2(
     if (percentsStream)
       callback.SetWindowWidth(consoleWidth);
   
-    callback.Init(g_StdStream, g_ErrStream, percentsStream, options.DisablePercents);
+    callback.Init(g_StdStream, g_ErrStream, percentsStream,
+        options.DisablePercents, options.ProgressLineMode);
     callback.PrintHeaders = options.EnableHeaders;
     callback.PrintFields = options.ListFields;
 
